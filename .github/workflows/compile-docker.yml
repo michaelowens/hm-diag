@@ -36,7 +36,6 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            nebraltd/hm-diag
             ghcr.io/${{ github.repository }}
           tags: |
             type=sha,prefix=${{ matrix.arch }}-
@@ -51,8 +50,8 @@ jobs:
           push: true
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=nebraltd/hm-diag:buildcache-${{ matrix.arch }}
-          cache-to: type=registry,ref=nebraltd/hm-diag:buildcache-${{ matrix.arch }},mode=max
+          cache-from: type=registry,ref=michaelowens/hm-diag:buildcache-${{ matrix.arch }}
+          cache-to: type=registry,ref=michaelowens/hm-diag:buildcache-${{ matrix.arch }},mode=max
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
@@ -82,7 +81,6 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            nebraltd/hm-diag
             ghcr.io/${{ github.repository }}
           flavor: |
             latest=true
@@ -93,6 +91,5 @@ jobs:
       - name: Create multi-arch images
         run: |
           tags=(${{ steps.meta.outputs.tags }})
-          docker buildx imagetools create -t ${tags[0]} -t ${tags[1]} -t ${tags[2]} nebraltd/hm-diag:arm64-${{ github.sha }} nebraltd/hm-diag:amd64-${{ github.sha }}
-          docker buildx imagetools create -t ${tags[3]} -t ${tags[4]} -t ${tags[5]} ghcr.io/nebraltd/hm-diag:arm64-${{ github.sha }} ghcr.io/nebraltd/hm-diag:amd64-${{ github.sha }}
+          docker buildx imagetools create -t ${tags[3]} -t ${tags[4]} -t ${tags[5]} ghcr.io/michaelowens/hm-diag:arm64-${{ github.sha }} ghcr.io/michaelowens/hm-diag:amd64-${{ github.sha }}
 
