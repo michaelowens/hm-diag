@@ -77,6 +77,8 @@ RUN gpg --import manufacturing-key.gpg && \
 
 # Copy ThingsIX Config
 COPY thingsix_config.yaml /opt/thingsix/thingsix_config.yaml
+RUN mkdir -p /var/thix
+COPY thingsix_config.yaml /var/thix/config.yaml
 
 # Add python dependencies to PYTHONPATH
 ENV PYTHONPATH="${PYTHON_DEPENDENCIES_DIR}:${PYTHONPATH}"
