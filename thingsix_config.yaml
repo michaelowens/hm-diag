@@ -32,3 +32,4 @@ forwarder:
 log:
     level: info      # [trace,debug,info,warn,error,fatal,panic]
     timestamp: true  # [true, false]
+
